@@ -16,7 +16,10 @@ const createCourse = async (req, res) => {
 
 const getCourses = async(req, res) => {
 
-    const courses = await Course.find();
+    const courses = await Course
+        .find()
+        .populate('author', 'name -_id') //name noriu gauti, bet id nenoriu
+        .select('name');
 
     if(!courses) res.status(404).send("not found")
 
@@ -31,12 +34,14 @@ const getFilterCourses = async(req, res) => {
     if(!(req.body.name || req.body.author)) res.status(404).send("Not found");
 
     const course = await Course
-    .find({ $or: [ 
-        { name: req.body.name }, 
-        { author: req.body.author } 
-    ]})
+        .find({ $or: [ 
+            { name: req.body.name }, 
+            { author: req.body.author } 
+        ]})
+        .populate('author', 'name -_id')
+        .select('name')
 
-    .catch(err => {console.log('filter broke', err)});
+        .catch(err => {console.log('filter broke', err)});
 
     if(!course) res.status(404).send("not found")
     
