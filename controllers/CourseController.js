@@ -38,7 +38,7 @@ const getFilterCourses = async(req, res) => {
             { name: req.body.name }, 
             { author: req.body.author } 
         ]})
-        .populate('author', 'name -_id')
+        .populate('author', '-_id') //jeigu nori tik pasirinkti ka nerodyti
         .select('name')
 
         .catch(err => {console.log('filter broke', err)});
