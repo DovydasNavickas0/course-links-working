@@ -7,8 +7,6 @@ dotenv.config()
 
 connectDB();
 
-//createAuthor("Jolita", "Engages with javascript", "https://kitm.lt/")
-//createCourse("Javascript courses", '63e603eed9bd7a8ba710c0f0')
 // http://localhost:3001/api/course/
 
 const {

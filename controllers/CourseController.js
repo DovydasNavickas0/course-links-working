@@ -1,15 +1,15 @@
 const Course = require('../models/Courses');
 
 const createCourse = async (req, res) => {
+    
     if(!req.body.name || !req.body.author) res.status(404).send("Not found");
-
 
     const course = await Course.create({
         name: req.body.name,
         author: req.body.author,
     })
-    res.status(200).json(course)
 
+    res.status(200).json(course)
 }
 
 //-----------------------------------------------
@@ -28,11 +28,13 @@ const getCourses = async(req, res) => {
 
 const getFilterCourses = async(req, res) => {
 
-    if(!req.body.name || !req.body.author || !req.body.ispublished) res.status(404).send("Not found");
+    if(!(req.body.name || req.body.author)) res.status(404).send("Not found");
 
     const course = await Course
-    .find({ $or: [ { name: req.body.name }, 
-        {author: req.body.author} ] })
+    .find({ $or: [ 
+        { name: req.body.name }, 
+        { author: req.body.author } 
+    ]})
 
     .catch(err => {console.log('filter broke', err)});
 

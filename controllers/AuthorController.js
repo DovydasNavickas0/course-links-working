@@ -1,13 +1,14 @@
 const Author = require('../models/Author');
 
 const createAuthor = async (req, res) => {
-    if(!req.body.name || !req.body.author) res.status(404).send("Not found");
-
+    
+    if(!req.body.name || !req.body.bio) res.status(404).send("Not found");
 
     const author = await Author.create({
         name: req.body.name,
         bio: req.body.bio
     })
+
     res.status(200).json(author)
 
 }
@@ -28,7 +29,7 @@ const getAuthors = async(req, res) => {
 
 const getFilterAuthor = async(req, res) => {
 
-    if(!req.body.name || !req.body.bio) res.status(404).send("Not found");
+    if(!(req.body.name || req.body.bio)) res.status(404).send("Not found");
 
     const author = await Author
     .find({ $or: [ { name: req.body.name }, 
